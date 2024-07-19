@@ -1,6 +1,7 @@
 // Importer les fonctions nécessaires depuis les SDK Firebase
 import { initializeApp } from "https://www.gstatic.com/firebasejs/10.12.4/firebase-app.js";
-import { getDatabase, ref, set, get, child, onValue } from "https://www.gstatic.com/firebasejs/10.12.4/firebase-database.js";
+import { getDatabase, ref, set, get, child } from "https://www.gstatic.com/firebasejs/10.12.4/firebase-database.js";
+import { getAuth, signInWithEmailAndPassword } from "https://www.gstatic.com/firebasejs/10.12.4/firebase-auth.js";
 
 // Votre configuration Firebase
 const firebaseConfig = {
@@ -17,33 +18,33 @@ const firebaseConfig = {
 // Initialiser Firebase
 const app = initializeApp(firebaseConfig);
 const database = getDatabase(app);
+const auth = getAuth(app);
 
 $(document).ready(function() {
     console.log("Document is ready");
 
-    $('#load-info').click(function() {
-        console.log("Load info clicked");
-        var username = $('#username').val();
-        if (username) {
-            console.log("Username entered:", username);
-            // Récupérer les informations existantes depuis Firebase
-            const dbRef = ref(database);
-            get(child(dbRef, `qr-codes/${username}`)).then((snapshot) => {
-                if (snapshot.exists()) {
-                    const data = snapshot.val();
-                    console.log("Data found:", data);
-                    $('#name').val(data.name);
-                    $('#phone').val(data.phone);
-                    $('#email').val(data.email);
-                } else {
-                    alert("Aucune information trouvée pour cet utilisateur.");
-                }
-            }).catch((error) => {
-                console.error(error);
+    // Fonction de connexion pour les administrateurs
+    function adminLogin(email, password) {
+        signInWithEmailAndPassword(auth, email, password)
+            .then((userCredential) => {
+                // Connexion réussie
+                const user = userCredential.user;
+                console.log('Admin logged in:', user);
+                // Montrer la section admin et cacher la section de connexion
+                $('#login-section').hide();
+                $('#admin-section').show();
+            })
+            .catch((error) => {
+                console.error('Login failed:', error);
             });
-        } else {
-            alert("Veuillez entrer un nom d'utilisateur.");
-        }
+    }
+
+    // Gérer la soumission du formulaire de connexion
+    $('#login-form').submit(function(event) {
+        event.preventDefault();
+        const email = $('#admin-email').val();
+        const password = $('#admin-password').val();
+        adminLogin(email, password);
     });
 
     $('#contact-form').submit(function(event) {
@@ -79,31 +80,9 @@ $(document).ready(function() {
                 qrcode: img
             }).then(() => {
                 console.log("Data saved to Firebase");
-                loadUserData();  // Rechargez les données après l'ajout
             }).catch((error) => {
                 console.error(error);
             });
         }, 500);
     });
-
-    // Fonction pour charger et afficher les données des utilisateurs
-    function loadUserData() {
-        const dbRef = ref(database, 'qr-codes/');
-        onValue(dbRef, (snapshot) => {
-            const usersList = $('#users-list');
-            usersList.empty();
-            snapshot.forEach((childSnapshot) => {
-                const userData = childSnapshot.val();
-                usersList.append(`<li class="list-group-item">
-                    <strong>Nom d'utilisateur:</strong> ${childSnapshot.key} <br>
-                    <strong>Nom:</strong> ${userData.name} <br>
-                    <strong>Téléphone:</strong> ${userData.phone} <br>
-                    <strong>Email:</strong> ${userData.email}
-                </li>`);
-            });
-        });
-    }
-
-    // Charger les données des utilisateurs au chargement de la page
-    loadUserData();
 });
