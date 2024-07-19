@@ -15,43 +15,57 @@
         #download-link {
             margin-top: 20px;
         }
-        #user-data {
-            margin-top: 20px;
+        #admin-section {
+            display: none;
         }
     </style>
+    <!-- Ajouter Firebase Authentication SDK -->
+    <script src="https://www.gstatic.com/firebasejs/10.12.4/firebase-auth.js"></script>
 </head>
 <body>
     <div class="container">
         <h1 class="text-center my-4">Générateur de QR Code de Contact</h1>
-        <div class="card">
-            <div class="card-body">
-                <form id="contact-form">
-                    <div class="form-group">
-                        <label for="username">Nom d'utilisateur:</label>
-                        <input type="text" class="form-control" id="username" name="username" required>
-                    </div>
-                    <button type="button" id="load-info" class="btn btn-primary mb-3">Charger les informations</button>
-                    <div class="form-group">
-                        <label for="name">Nom:</label>
-                        <input type="text" class="form-control" id="name" name="name" required>
-                    </div>
-                    <div class="form-group">
-                        <label for="phone">Téléphone:</label>
-                        <input type="text" class="form-control" id="phone" name="phone" required>
-                    </div>
-                    <div class="form-group">
-                        <label for="email">Email:</label>
-                        <input type="email" class="form-control" id="email" name="email" required>
-                    </div>
-                    <button type="submit" class="btn btn-success">Générer le QR Code</button>
-                </form>
-                <div id="qrcode" class="text-center"></div>
-                <a id="download-link" class="btn btn-info" style="display:none">Télécharger le QR Code</a>
-            </div>
+        <div id="login-section" class="mb-4">
+            <h2>Connexion Administrateur</h2>
+            <form id="login-form">
+                <div class="form-group">
+                    <label for="admin-email">Email:</label>
+                    <input type="email" class="form-control" id="admin-email" required>
+                </div>
+                <div class="form-group">
+                    <label for="admin-password">Mot de passe:</label>
+                    <input type="password" class="form-control" id="admin-password" required>
+                </div>
+                <button type="submit" class="btn btn-primary">Se connecter</button>
+            </form>
         </div>
-        <div id="user-data" class="mt-4">
-            <h2>Utilisateurs et leurs données</h2>
-            <ul id="users-list" class="list-group"></ul>
+        <div id="admin-section">
+            <div class="card">
+                <div class="card-body">
+                    <form id="contact-form">
+                        <div class="form-group">
+                            <label for="username">Nom d'utilisateur:</label>
+                            <input type="text" class="form-control" id="username" name="username" required>
+                        </div>
+                        <button type="button" id="load-info" class="btn btn-primary mb-3">Charger les informations</button>
+                        <div class="form-group">
+                            <label for="name">Nom:</label>
+                            <input type="text" class="form-control" id="name" name="name" required>
+                        </div>
+                        <div class="form-group">
+                            <label for="phone">Téléphone:</label>
+                            <input type="text" class="form-control" id="phone" name="phone" required>
+                        </div>
+                        <div class="form-group">
+                            <label for="email">Email:</label>
+                            <input type="email" class="form-control" id="email" name="email" required>
+                        </div>
+                        <button type="submit" class="btn btn-success">Générer le QR Code</button>
+                    </form>
+                    <div id="qrcode" class="text-center"></div>
+                    <a id="download-link" class="btn btn-info" style="display:none">Télécharger le QR Code</a>
+                </div>
+            </div>
         </div>
     </div>
 
