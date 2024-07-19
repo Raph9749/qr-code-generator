@@ -18,6 +18,9 @@ const firebaseConfig = {
 const app = initializeApp(firebaseConfig);
 const database = getDatabase(app);
 
+// Liste des métiers valides (exemple simplifié)
+const validProfessions = ["Médecin", "Ingénieur", "Professeur", "Avocat", "Architecte", "Développeur", "Comptable", "Journaliste"];
+
 $(document).ready(function() {
     console.log("Document is ready");
 
@@ -35,6 +38,7 @@ $(document).ready(function() {
                     $('#name').val(data.name);
                     $('#phone').val(data.phone);
                     $('#email').val(data.email);
+                    $('#profession').val(data.profession);
                 } else {
                     alert("Aucune information trouvée pour cet utilisateur.");
                 }
@@ -54,6 +58,14 @@ $(document).ready(function() {
         var name = $('#name').val();
         var phone = $('#phone').val();
         var email = $('#email').val();
+        var profession = $('#profession').val();
+
+        // Vérifier si la profession est valide
+        if (!validProfessions.includes(profession)) {
+            alert("Veuillez entrer une profession valide.");
+            return;
+        }
+
         var contactInfo = `MECARD:N:${name};TEL:${phone};EMAIL:${email};;`;
 
         $('#qrcode').empty();
@@ -76,6 +88,7 @@ $(document).ready(function() {
                 name: name,
                 phone: phone,
                 email: email,
+                profession: profession,
                 qrcode: img
             }).then(() => {
                 console.log("Data saved to Firebase");
