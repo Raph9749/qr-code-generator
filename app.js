@@ -36,4 +36,54 @@ $(document).ready(function() {
             })
             .catch((error) => {
                 console.error('Login failed:', error);
-                alert("Échec de la connexion : "
+                alert("Échec de la connexion : " + error.message);
+            });
+    }
+
+    // Gérer la soumission du formulaire de connexion
+    $('#login-form').submit(function(event) {
+        event.preventDefault();
+        const email = $('#admin-email').val();
+        const password = $('#admin-password').val();
+        adminLogin(email, password);
+    });
+
+    $('#contact-form').submit(function(event) {
+        event.preventDefault();
+        console.log("Form submitted");
+
+        var username = $('#username').val();
+        var name = $('#name').val();
+        var phone = $('#phone').val();
+        var email = $('#email').val();
+        var contactInfo = `MECARD:N:${name};TEL:${phone};EMAIL:${email};;`;
+
+        $('#qrcode').empty();
+        var qrcode = new QRCode(document.getElementById("qrcode"), {
+            text: contactInfo,
+            width: 256,
+            height: 256
+        });
+
+        setTimeout(() => {
+            var img = $('#qrcode').find('img').attr('src');
+            $('#download-link').attr('href', img);
+            $('#download-link').attr('download', 'qrcode.png');
+            $('#download-link').show();
+
+            console.log("QR code generated:", img);
+
+            // Enregistrer ou mettre à jour le QR code dans Firebase
+            set(ref(database, 'qr-codes/' + username), {
+                name: name,
+                phone: phone,
+                email: email,
+                qrcode: img
+            }).then(() => {
+                console.log("Data saved to Firebase");
+            }).catch((error) => {
+                console.error(error);
+            });
+        }, 500);
+    });
+});
