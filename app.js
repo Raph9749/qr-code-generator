@@ -1,6 +1,6 @@
 // Importer les fonctions nécessaires depuis les SDK Firebase
 import { initializeApp } from "https://www.gstatic.com/firebasejs/10.12.4/firebase-app.js";
-import { getDatabase, ref, set, get, child } from "https://www.gstatic.com/firebasejs/10.12.4/firebase-database.js";
+import { getDatabase, ref, set, get, child, onValue } from "https://www.gstatic.com/firebasejs/10.12.4/firebase-database.js";
 
 // Votre configuration Firebase
 const firebaseConfig = {
@@ -79,9 +79,31 @@ $(document).ready(function() {
                 qrcode: img
             }).then(() => {
                 console.log("Data saved to Firebase");
+                loadUserData();  // Rechargez les données après l'ajout
             }).catch((error) => {
                 console.error(error);
             });
         }, 500);
     });
+
+    // Fonction pour charger et afficher les données des utilisateurs
+    function loadUserData() {
+        const dbRef = ref(database, 'qr-codes/');
+        onValue(dbRef, (snapshot) => {
+            const usersList = $('#users-list');
+            usersList.empty();
+            snapshot.forEach((childSnapshot) => {
+                const userData = childSnapshot.val();
+                usersList.append(`<li class="list-group-item">
+                    <strong>Nom d'utilisateur:</strong> ${childSnapshot.key} <br>
+                    <strong>Nom:</strong> ${userData.name} <br>
+                    <strong>Téléphone:</strong> ${userData.phone} <br>
+                    <strong>Email:</strong> ${userData.email}
+                </li>`);
+            });
+        });
+    }
+
+    // Charger les données des utilisateurs au chargement de la page
+    loadUserData();
 });
