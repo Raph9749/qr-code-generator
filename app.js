@@ -66,7 +66,7 @@ $(document).ready(function() {
             return;
         }
 
-        var contactInfo = `MECARD:N:${name};TEL:${phone};EMAIL:${email};;`;
+        var contactInfo = `MECARD:N:${name};TEL:${phone};EMAIL:${email};NOTE:${profession};;`;
 
         $('#qrcode').empty();
         var qrcode = new QRCode(document.getElementById("qrcode"), {
