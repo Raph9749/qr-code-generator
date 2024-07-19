@@ -1,0 +1,80 @@
+<!DOCTYPE html>
+<html lang="fr">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Accéder à votre QR Code</title>
+    <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/4.5.2/css/bootstrap.min.css">
+    <style>
+        body {
+            padding: 20px;
+        }
+        #qrcode {
+            margin-top: 20px;
+        }
+    </style>
+</head>
+<body>
+    <div class="container">
+        <h1 class="text-center my-4">Accéder à votre QR Code</h1>
+        <div class="card">
+            <div class="card-body">
+                <form id="login-form">
+                    <div class="form-group">
+                        <label for="username">Nom d'utilisateur:</label>
+                        <input type="text" class="form-control" id="username" name="username" required>
+                    </div>
+                    <button type="submit" class="btn btn-primary">Afficher le QR Code</button>
+                </form>
+                <div id="qrcode" class="text-center"></div>
+            </div>
+        </div>
+    </div>
+
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/jquery/3.6.0/jquery.min.js"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/qrcodejs/1.0.0/qrcode.min.js"></script>
+    <script src="https://www.gstatic.com/firebasejs/9.1.0/firebase-app.js"></script>
+    <script src="https://www.gstatic.com/firebasejs/9.1.0/firebase-database.js"></script>
+    <script>
+        // Configuration Firebase (remplacez par vos propres clés)
+        const firebaseConfig = {
+            apiKey: "YOUR_API_KEY",
+            authDomain: "YOUR_PROJECT_ID.firebaseapp.com",
+            databaseURL: "https://YOUR_PROJECT_ID.firebaseio.com",
+            projectId: "YOUR_PROJECT_ID",
+            storageBucket: "YOUR_PROJECT_ID.appspot.com",
+            messagingSenderId: "YOUR_MESSAGING_SENDER_ID",
+            appId: "YOUR_APP_ID"
+        };
+
+        // Initialiser Firebase
+        firebase.initializeApp(firebaseConfig);
+
+        // Référence à la base de données
+        const database = firebase.database();
+
+        $(document).ready(function() {
+            $('#login-form').submit(function(event) {
+                event.preventDefault();
+                
+                var username = $('#username').val();
+
+                // Récupérer le QR code depuis Firebase
+                database.ref('qr-codes/' + username).once('value').then(function(snapshot) {
+                    var data = snapshot.val();
+                    if (data) {
+                        $('#qrcode').empty();
+                        var qrcode = new QRCode(document.getElementById("qrcode"), {
+                            text: `MECARD:N:${data.name};TEL:${data.phone};EMAIL:${data.email};;`,
+                            width: 256,
+                            height: 256
+                        });
+                    } else {
+                        alert("Aucun QR Code trouvé pour cet utilisateur.");
+                    }
+                });
+            });
+        });
+    </script>
+</body>
+</html>
