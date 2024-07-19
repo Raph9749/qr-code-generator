@@ -6,12 +6,12 @@ import { getDatabase, ref, set, get, child } from "https://www.gstatic.com/fireb
 const firebaseConfig = {
     apiKey: "AIzaSyBDhvMF__q7Btu2uSlIAk5g1DuzMpJC794",
     authDomain: "qr-code-generator-7d7fa.firebaseapp.com",
-    databaseURL: "https://qr-code-generator-7d7fa.firebaseio.com",
     projectId: "qr-code-generator-7d7fa",
     storageBucket: "qr-code-generator-7d7fa.appspot.com",
     messagingSenderId: "762081265650",
     appId: "1:762081265650:web:b3472fc96c420e5bc8cd6b",
-    measurementId: "G-J70Z9QJ4R4"
+    measurementId: "G-J70Z9QJ4R4",
+    databaseURL: "https://qr-code-generator-7d7fa-default-rtdb.firebaseio.com/"
 };
 
 // Initialiser Firebase
