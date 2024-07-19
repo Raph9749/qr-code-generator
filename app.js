@@ -1,7 +1,6 @@
 // Importer les fonctions nécessaires depuis les SDK Firebase
 import { initializeApp } from "https://www.gstatic.com/firebasejs/10.12.4/firebase-app.js";
-import { getDatabase, ref, set } from "https://www.gstatic.com/firebasejs/10.12.4/firebase-database.js";
-import { getAuth, signInWithEmailAndPassword } from "https://www.gstatic.com/firebasejs/10.12.4/firebase-auth.js";
+import { getDatabase, ref, set, get, child } from "https://www.gstatic.com/firebasejs/10.12.4/firebase-database.js";
 
 // Votre configuration Firebase
 const firebaseConfig = {
@@ -18,34 +17,33 @@ const firebaseConfig = {
 // Initialiser Firebase
 const app = initializeApp(firebaseConfig);
 const database = getDatabase(app);
-const auth = getAuth(app);
 
 $(document).ready(function() {
     console.log("Document is ready");
 
-    // Fonction de connexion pour les administrateurs
-    function adminLogin(email, password) {
-        signInWithEmailAndPassword(auth, email, password)
-            .then((userCredential) => {
-                // Connexion réussie
-                const user = userCredential.user;
-                console.log('Admin logged in:', user);
-                // Montrer la section admin et cacher la section de connexion
-                $('#login-section').hide();
-                $('#admin-section').show();
-            })
-            .catch((error) => {
-                console.error('Login failed:', error);
-                alert("Échec de la connexion : " + error.message);
+    $('#load-info').click(function() {
+        console.log("Load info clicked");
+        var username = $('#username').val();
+        if (username) {
+            console.log("Username entered:", username);
+            // Récupérer les informations existantes depuis Firebase
+            const dbRef = ref(database);
+            get(child(dbRef, `qr-codes/${username}`)).then((snapshot) => {
+                if (snapshot.exists()) {
+                    const data = snapshot.val();
+                    console.log("Data found:", data);
+                    $('#name').val(data.name);
+                    $('#phone').val(data.phone);
+                    $('#email').val(data.email);
+                } else {
+                    alert("Aucune information trouvée pour cet utilisateur.");
+                }
+            }).catch((error) => {
+                console.error(error);
             });
-    }
-
-    // Gérer la soumission du formulaire de connexion
-    $('#login-form').submit(function(event) {
-        event.preventDefault();
-        const email = $('#admin-email').val();
-        const password = $('#admin-password').val();
-        adminLogin(email, password);
+        } else {
+            alert("Veuillez entrer un nom d'utilisateur.");
+        }
     });
 
     $('#contact-form').submit(function(event) {
