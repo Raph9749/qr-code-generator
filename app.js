@@ -1,19 +1,22 @@
-// Configuration Firebase (remplacez par vos propres clés)
+// Importer les fonctions nécessaires depuis les SDK Firebase
+import { initializeApp } from "https://www.gstatic.com/firebasejs/10.12.4/firebase-app.js";
+import { getDatabase, ref, set, get, child } from "https://www.gstatic.com/firebasejs/10.12.4/firebase-database.js";
+
+// Votre configuration Firebase
 const firebaseConfig = {
-    apiKey: "YOUR_API_KEY",
-    authDomain: "YOUR_PROJECT_ID.firebaseapp.com",
-    databaseURL: "https://YOUR_PROJECT_ID.firebaseio.com",
-    projectId: "YOUR_PROJECT_ID",
-    storageBucket: "YOUR_PROJECT_ID.appspot.com",
-    messagingSenderId: "YOUR_MESSAGING_SENDER_ID",
-    appId: "YOUR_APP_ID"
+    apiKey: "AIzaSyBDhvMF__q7Btu2uSlIAk5g1DuzMpJC794",
+    authDomain: "qr-code-generator-7d7fa.firebaseapp.com",
+    databaseURL: "https://qr-code-generator-7d7fa.firebaseio.com",
+    projectId: "qr-code-generator-7d7fa",
+    storageBucket: "qr-code-generator-7d7fa.appspot.com",
+    messagingSenderId: "762081265650",
+    appId: "1:762081265650:web:b3472fc96c420e5bc8cd6b",
+    measurementId: "G-J70Z9QJ4R4"
 };
 
 // Initialiser Firebase
-firebase.initializeApp(firebaseConfig);
-
-// Référence à la base de données
-const database = firebase.database();
+const app = initializeApp(firebaseConfig);
+const database = getDatabase(app);
 
 $(document).ready(function() {
     console.log("Document is ready");
@@ -24,9 +27,10 @@ $(document).ready(function() {
         if (username) {
             console.log("Username entered:", username);
             // Récupérer les informations existantes depuis Firebase
-            database.ref('qr-codes/' + username).once('value').then(function(snapshot) {
-                var data = snapshot.val();
-                if (data) {
+            const dbRef = ref(database);
+            get(child(dbRef, `qr-codes/${username}`)).then((snapshot) => {
+                if (snapshot.exists()) {
+                    const data = snapshot.val();
                     console.log("Data found:", data);
                     $('#name').val(data.name);
                     $('#phone').val(data.phone);
@@ -34,6 +38,8 @@ $(document).ready(function() {
                 } else {
                     alert("Aucune information trouvée pour cet utilisateur.");
                 }
+            }).catch((error) => {
+                console.error(error);
             });
         } else {
             alert("Veuillez entrer un nom d'utilisateur.");
@@ -66,13 +72,16 @@ $(document).ready(function() {
             console.log("QR code generated:", img);
 
             // Enregistrer ou mettre à jour le QR code dans Firebase
-            database.ref('qr-codes/' + username).set({
+            set(ref(database, 'qr-codes/' + username), {
                 name: name,
                 phone: phone,
                 email: email,
                 qrcode: img
+            }).then(() => {
+                console.log("Data saved to Firebase");
+            }).catch((error) => {
+                console.error(error);
             });
-            console.log("Data saved to Firebase");
         }, 500);
     });
 });
