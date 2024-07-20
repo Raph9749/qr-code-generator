@@ -80,7 +80,9 @@ $(document).ready(function() {
         var qrcode = new QRCode(document.getElementById("qrcode"), {
             text: contactInfo,
             width: 256,
-            height: 256
+            height: 256,
+            colorDark: "#000000",  // Couleur du QR code (noir)
+            colorLight: "#ffffff"  // Couleur de fond (blanc)
         });
 
         // Attendre que le QR code soit généré avant d'accéder à son image
