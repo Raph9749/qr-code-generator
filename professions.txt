@@ -1,25 +1,25 @@
 Acousticien
 Actuaire
 Administrateur
-Administrateur de bases de données
+Administrateur de bases de donnees
 Agent de joueur
-Agent de sécurité
+Agent de securite
 Agent de voyage
 Agent immobilier
 Agriculteur
-Aide-soignant
+Aidesoignant
 Ambassadeur
-Analyste de données
-Analyste en cybersécurité
+Analyste de donnees
+Analyste en cybersecurite
 Analyste financier
 Animateur
-Animateur 2D/3D
+Animateur DD
 Antiquaire
 Apiculteur
 Arboriculteur
+Archeologue
 Architecte
 Archiviste
-Archéologue
 Artisan
 Artiste peintre
 Assistant comptable
@@ -29,17 +29,17 @@ Assistant social
 Assureur
 Astronome
 Astrophysicien
-Attaché de presse
-Audioprothésiste
+Attache de presse
+Audioprothesiste
 Auditeur
 Auteur
 Avocat
 Barman
 Berger
-Bibliothécaire
-Bibliothécaire spécialisé
+Bibliothecaire
+Bibliothecaire specialise
 Bijoutier
-Bijoutier-joaillier
+Bijoutierjoaillier
 Biologiste
 Biostatisticien
 Blogueur
@@ -48,15 +48,17 @@ Boucher
 Boulanger
 Brasseur
 Brocanteur
-Bûcheron
+Bucheron
 Cadreur
 Caissier
 Carreleur
 Cartographe
+Ceramiste
+Cerealier
 Charcutier
-Chargé de clientèle
-Chargé de communication
-Chargé d’études
+Charge de clientele
+Charge de communication
+Charge detudes
 Chauffagiste
 Chauffeur
 Chef de chantier
@@ -65,9 +67,9 @@ Chef de produit
 Chimiste
 Chiropracteur
 Chirurgien
-Chirurgien-dentiste
+Chirurgiendentiste
 Chocolatier
-Cinéaste
+Cineaste
 Coach
 Coach sportif
 Coiffeur
@@ -78,38 +80,48 @@ Conseiller en image
 Conseiller en orientation
 Conseiller financier
 Conseiller juridique
-Conservateur de musée
+Conservateur de musee
 Consultant
 Consultant en informatique
 Couturier
-Critique d’art
-Céramiste
-Céréalier
+Critique dart
 Data scientist
+Demographe
 Dentiste
+Depute
 Designer
+Developpeur mobile
+Developpeur web
+Dieteticien
+Dieteticiennutritionniste
 Directeur artistique
 Directeur de production
 Directeur financier
-Diététicien
-Diététicien-nutritionniste
 Dompteur
-Démographe
-Député
-Développeur mobile
-Développeur web
+Ebeniste
+Economiste
+Ecrivain
+Editeur
+Educateur specialise
+Educateur sportif
+Electricien
+Eleveur
+Eleveur de chevaux
 Emballeur
-Enquêteur privé
+Enqueteur prive
 Enseignant
-Entraîneur sportif
+Entraineur sportif
 Entrepreneur
+Epidemiologiste
+Equitherapeute
 Ergonomiste
-Ergothérapeute
-Esthéticien
+Ergotherapeute
+Estheticien
+Etudiant
 Expert-comptable
 Fabricant de meubles
 Facteur
-Facteur d’orgues
+Facteur dorgues
 Ferrailleur
 Ferronnier
 Figurant
@@ -122,103 +134,107 @@ Fromager
 Game designer
 Garagiste
 Garde forestier
+Geologue
+Geometre
+Geophysicien
 Gestionnaire de patrimoine
 Gestionnaire de projet
 Gouvernante
 Graphiste
 Guide touristique
-Géologue
-Géomètre
-Géophysicien
 Herboriste
 Historien
 Horloger
-Horloger-bijoutier
+Horlogerbijoutier
 Horticulteur
+HoteHotesse
+Hotesse de lair
 Hydraulicien
-Hygiéniste dentaire
-Hôte/Hôtesse
-Hôtesse de l’air
+Hygieniste dentaire
 Illustrateur
 Imprimeur
 Infirmier
 Infographiste
 Informaticien
-Ingénieur agronome
-Ingénieur biomédical
-Ingénieur chimiste
-Ingénieur civil
-Ingénieur du son
-Ingénieur en aéronautique
-Ingénieur en biotechnologie
-Ingénieur en construction
-Ingénieur en informatique
-Ingénieur en matériaux
-Ingénieur en microélectronique
-Ingénieur en mécanique
-Ingénieur en nanotechnologies
-Ingénieur en physique
-Ingénieur en robotique
-Ingénieur en télécommunications
-Ingénieur environnement
-Institutrice/Instituteur
-Interprète
-Intégrateur web
-Intérimaire
+Ingenieur agronome
+Ingenieur biomedical
+Ingenieur chimiste
+Ingenieur civil
+Ingenieur du son
+Ingenieur en aeronautique
+Ingenieur en biotechnologie
+Ingenieur en construction
+Ingenieur en informatique
+Ingenieur en materiaux
+Ingenieur en mecanique
+Ingenieur en microelectronique
+Ingenieur en nanotechnologies
+Ingenieur en physique
+Ingenieur en robotique
+Ingenieur en telecommunications
+Ingenieur environnement
+InstituteurInstitutrice
+Integrateur web
+Interimaire
+Interprete
 Jardinier
 Joaillier
 Journaliste
 Journaliste sportif
 Juge
+Jure
 Juriste
-Juriste d'entreprise
-Juré
-Kinésithérapeute
+Juriste dentreprise
+Kinesitherapeute
 Laborantin
 Libraire
 Livreur
 Logisticien
 Luthier
+Macon
 Magistrat
 Manager
 Maquilleur
-Marin-pêcheur
-Maçon
+Marinpecheur
+Mecanicien
+Medecin
+Medecin generaliste
+Meteorologiste
 Microbiologiste
-Modéliste
+Modeliste
 Moniteur de ski
 Monteur
 Mycologue
-Mécanicien
-Médecin
-Médecin généraliste
-Météorologiste
 Naturopathe
+Negociant
+Negociant en vin
 Neurologue
 Notaire
 Nutritionniste
-Négociant
-Négociant en vin
-Océanographe
-Océanographe biologiste
+Oceanographe
+Oceanographe biologiste
+OEnologue
+Operateur de saisie
 Ophtalmologue
 Opticien
-Optométriste
-Opérateur de saisie
-Orfèvre
+Optometriste
+Orfevre
+Orthesiste
 Orthophoniste
 Orthoptiste
-Orthésiste
-Ostéopathe
+Osteopathe
 Ouvrier agricole
 Palefrenier
-Paléontologue
+Paleontologue
 Parfumeur
 Pathologiste
-Peintre en bâtiment
+Patissier
+Pedicurepodologue
+Peintre en batiment
+Pepinieriste
 Pharmacien
 Photographe
-Phytothérapeute
+Phytotherapeute
 Pilote
 Pilote de drone
 Planificateur urbain
@@ -231,21 +247,18 @@ Postier
 Procureur
 Psychiatre
 Psychologue
-Pâtissier
-Pédicure-podologue
-Pépinériste
 Radiologue
+Realisateur
+Receptionniste
 Recruteur
+Redacteur web
+Regisseur
 Responsable marketing
 Restaurateur
+Restaurateur dart
 Restaurateur de patrimoine
-Restaurateur d’art
 Roboticien
-Réalisateur
-Réceptionniste
-Rédacteur web
-Régisseur
-Sage-femme
+Sagefemme
 Serrurier
 Sociologue
 Soigneur animalier
@@ -259,50 +272,32 @@ Technicien audiovisuel
 Technicien de laboratoire
 Technicien de maintenance
 Technicien en biotechnologie
-Technicien en génie civil
+Technicien en electronique
+Technicien en genie civil
 Technicien en informatique
-Technicien en électronique
-Technico-commercial
-Testeur de jeux vidéos
+Technicocommercial
+Testeur de jeux videos
 Thanatopracteur
-Théologien
+Theologien
 Tonnelier
 Traducteur
-Traducteur simultané
-Trésorier
+Traducteur simultane
+Tresorier
 UI Designer
-Urbainiste
 Urbaniste
 Usineur
 Vendeur
 Vendeur en animalerie
-Vendeur en prêt-à-porter
+Vendeur en pretaporter
 Verrier
-Vidéaste
+Veterinaire
+Vidaste
 Vigile
 Viticulteur
 Vitrailliste
 Vitrier
-Vitrier
-Vétérinaire
-Vétérinaire
 Web designer
 Webmestre
-Youtuber gaming
-Youtubeur
+YouTuber gaming
 Zootechnicien
-Zoothérapeute
-Ébéniste
-Économiste
-Écrivain
-Éditeur
-Éducateur sportif
-Éducateur spécialisé
-Électricien
-Éleveur
-Éleveur de chevaux
-Épidémiologiste
-Équithérapeute
-Éthologue
-Étudiant
-Œnologue
+Zootherapeute
