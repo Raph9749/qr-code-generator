@@ -23,13 +23,12 @@ $(document).ready(function() {
 
     // Charger les professions depuis le fichier texte
     $.get('professions.txt', function(data) {
-        const professions = data.split('\n');
+        const professions = data.split('\n').map(profession => profession.trim()).filter(profession => profession);
         const professionSelect = $('#profession');
         professions.forEach(function(profession) {
-            if (profession.trim() !== "") {
-                professionSelect.append(`<option value="${profession.trim()}">${profession.trim()}</option>`);
-            }
+            professionSelect.append(`<option value="${profession}">${profession}</option>`);
         });
+        console.log("Professions loaded: ", professions);
     });
 
     $('#load-info').click(function() {
@@ -54,7 +53,7 @@ $(document).ready(function() {
                 alert("Aucune information trouvée pour cet utilisateur.");
             }
         }).catch((error) => {
-            console.error(error);
+            console.error("Error fetching data: ", error);
         });
     });
 
@@ -110,7 +109,7 @@ $(document).ready(function() {
                 }).then(() => {
                     console.log("Data saved to Firebase");
                 }).catch((error) => {
-                    console.error(error);
+                    console.error("Error saving data: ", error);
                 });
             } else {
                 console.error("QR code image not found.");
