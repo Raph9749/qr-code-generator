@@ -18,11 +18,19 @@ const firebaseConfig = {
 const app = initializeApp(firebaseConfig);
 const database = getDatabase(app);
 
-// Liste des métiers valides (exemple simplifié)
-const validProfessions = ["Médecin", "Ingénieur", "Professeur", "Avocat", "Architecte", "Développeur", "Comptable", "Journaliste"];
-
 $(document).ready(function() {
     console.log("Document is ready");
+
+    // Charger les professions depuis le fichier texte
+    $.get('professions.txt', function(data) {
+        const professions = data.split('\n');
+        const professionSelect = $('#profession');
+        professions.forEach(function(profession) {
+            if (profession.trim() !== "") {
+                professionSelect.append(`<option value="${profession.trim()}">${profession.trim()}</option>`);
+            }
+        });
+    });
 
     $('#load-info').click(function() {
         console.log("Load info clicked");
@@ -60,9 +68,9 @@ $(document).ready(function() {
         var email = $('#email').val();
         var profession = $('#profession').val();
 
-        // Vérifier si la profession est valide
-        if (!validProfessions.includes(profession)) {
-            alert("Veuillez entrer une profession valide.");
+        // Vérifier si la profession est sélectionnée
+        if (!profession) {
+            alert("Veuillez sélectionner une profession.");
             return;
         }
 
