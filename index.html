@@ -71,15 +71,22 @@
                 var profession = $('#profession').val();
 
                 var contactInfo = `MECARD:N:${name};TEL:${phone};EMAIL:${email};NOTE:${profession};;`;
+                console.log("Contact Info: ", contactInfo);
 
                 $('#qrcode').empty();
-                var qrcode = new QRCode(document.getElementById("qrcode"), {
-                    text: contactInfo,
-                    width: 256,
-                    height: 256,
-                    colorDark: "#000000",
-                    colorLight: "#ffffff"
-                });
+
+                try {
+                    var qrcode = new QRCode(document.getElementById("qrcode"), {
+                        text: contactInfo,
+                        width: 256,
+                        height: 256,
+                        colorDark: "#000000",
+                        colorLight: "#ffffff"
+                    });
+                    console.log("QR code generated");
+                } catch (error) {
+                    console.error("Error generating QR code: ", error);
+                }
 
                 setTimeout(() => {
                     var img = $('#qrcode').find('img').attr('src');
@@ -87,12 +94,11 @@
                         $('#download-link').attr('href', img);
                         $('#download-link').attr('download', 'qrcode.png');
                         $('#download-link').show();
-
-                        console.log("QR code generated:", img);
+                        console.log("QR code image found: ", img);
                     } else {
                         console.error("QR code image not found.");
                     }
-                }, 500);
+                }, 1000);
             });
         });
     </script>
