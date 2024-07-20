@@ -35,27 +35,27 @@ $(document).ready(function() {
     $('#load-info').click(function() {
         console.log("Load info clicked");
         var username = $('#username').val();
-        var profession = $('#profession').val();
-        if (username && profession) {
-            console.log("Username and profession entered:", username, profession);
-            // Récupérer les informations existantes depuis Firebase
-            const dbRef = ref(database);
-            get(child(dbRef, `qr-codes/professions/${profession}/${username}`)).then((snapshot) => {
-                if (snapshot.exists()) {
-                    const data = snapshot.val();
-                    console.log("Data found:", data);
-                    $('#name').val(data.name);
-                    $('#phone').val(data.phone);
-                    $('#email').val(data.email);
-                } else {
-                    alert("Aucune information trouvée pour cet utilisateur.");
-                }
-            }).catch((error) => {
-                console.error(error);
-            });
-        } else {
-            alert("Veuillez entrer un nom d'utilisateur et sélectionner une profession.");
+        if (!username) {
+            alert("Veuillez entrer un nom d'utilisateur.");
+            return;
         }
+
+        // Récupérer les informations existantes depuis Firebase
+        const dbRef = ref(database);
+        get(child(dbRef, `qr-codes/${username}`)).then((snapshot) => {
+            if (snapshot.exists()) {
+                const data = snapshot.val();
+                console.log("Data found:", data);
+                $('#name').val(data.name);
+                $('#phone').val(data.phone);
+                $('#email').val(data.email);
+                $('#profession').val(data.profession);
+            } else {
+                alert("Aucune information trouvée pour cet utilisateur.");
+            }
+        }).catch((error) => {
+            console.error(error);
+        });
     });
 
     $('#contact-form').submit(function(event) {
@@ -74,7 +74,9 @@ $(document).ready(function() {
             return;
         }
 
-        var contactInfo = `MECARD:N:${name};TEL:${phone};EMAIL:${email};NOTE:${profession};;`;
+        // Encoder les informations pour éviter les problèmes avec les caractères spéciaux
+        var contactInfo = `MECARD:N:${encodeURIComponent(name)};TEL:${encodeURIComponent(phone)};EMAIL:${encodeURIComponent(email)};NOTE:${encodeURIComponent(profession)};;`;
+        console.log("Encoded Contact Info: ", contactInfo);
 
         $('#qrcode').empty();
         try {
@@ -82,38 +84,37 @@ $(document).ready(function() {
                 text: contactInfo,
                 width: 256,
                 height: 256,
-                colorDark: "#000000",  // Couleur du QR code (noir)
-                colorLight: "#ffffff"  // Couleur de fond (blanc)
+                colorDark: "#000000",
+                colorLight: "#ffffff"
             });
-
-            // Attendre que le QR code soit généré avant d'accéder à son image
-            setTimeout(() => {
-                var img = $('#qrcode').find('img').attr('src');
-                if (img) {
-                    $('#download-link').attr('href', img);
-                    $('#download-link').attr('download', 'qrcode.png');
-                    $('#download-link').show();
-
-                    console.log("QR code generated:", img);
-
-                    // Enregistrer ou mettre à jour le QR code dans Firebase
-                    set(ref(database, `qr-codes/professions/${profession}/${username}`), {
-                        name: name,
-                        phone: phone,
-                        email: email,
-                        profession: profession,
-                        qrcode: img
-                    }).then(() => {
-                        console.log("Data saved to Firebase");
-                    }).catch((error) => {
-                        console.error(error);
-                    });
-                } else {
-                    console.error("QR code image not found.");
-                }
-            }, 1000); // Augmenter le temps d'attente si nécessaire
+            console.log("QR code generated");
         } catch (error) {
-            console.error("Error generating QR code:", error);
+            console.error("Error generating QR code: ", error);
         }
+
+        setTimeout(() => {
+            var img = $('#qrcode').find('img').attr('src');
+            if (img) {
+                $('#download-link').attr('href', img);
+                $('#download-link').attr('download', 'qrcode.png');
+                $('#download-link').show();
+                console.log("QR code image found: ", img);
+
+                // Enregistrer ou mettre à jour le QR code dans Firebase
+                set(ref(database, `qr-codes/${username}`), {
+                    name: name,
+                    phone: phone,
+                    email: email,
+                    profession: profession,
+                    qrcode: img
+                }).then(() => {
+                    console.log("Data saved to Firebase");
+                }).catch((error) => {
+                    console.error(error);
+                });
+            } else {
+                console.error("QR code image not found.");
+            }
+        }, 1000);
     });
 });
