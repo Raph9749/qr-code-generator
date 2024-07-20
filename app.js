@@ -77,39 +77,43 @@ $(document).ready(function() {
         var contactInfo = `MECARD:N:${name};TEL:${phone};EMAIL:${email};NOTE:${profession};;`;
 
         $('#qrcode').empty();
-        var qrcode = new QRCode(document.getElementById("qrcode"), {
-            text: contactInfo,
-            width: 256,
-            height: 256,
-            colorDark: "#000000",  // Couleur du QR code (noir)
-            colorLight: "#ffffff"  // Couleur de fond (blanc)
-        });
+        try {
+            var qrcode = new QRCode(document.getElementById("qrcode"), {
+                text: contactInfo,
+                width: 256,
+                height: 256,
+                colorDark: "#000000",  // Couleur du QR code (noir)
+                colorLight: "#ffffff"  // Couleur de fond (blanc)
+            });
 
-        // Attendre que le QR code soit généré avant d'accéder à son image
-        setTimeout(() => {
-            var img = $('#qrcode').find('img').attr('src');
-            if (img) {
-                $('#download-link').attr('href', img);
-                $('#download-link').attr('download', 'qrcode.png');
-                $('#download-link').show();
+            // Attendre que le QR code soit généré avant d'accéder à son image
+            setTimeout(() => {
+                var img = $('#qrcode').find('img').attr('src');
+                if (img) {
+                    $('#download-link').attr('href', img);
+                    $('#download-link').attr('download', 'qrcode.png');
+                    $('#download-link').show();
 
-                console.log("QR code generated:", img);
+                    console.log("QR code generated:", img);
 
-                // Enregistrer ou mettre à jour le QR code dans Firebase
-                set(ref(database, `qr-codes/professions/${profession}/${username}`), {
-                    name: name,
-                    phone: phone,
-                    email: email,
-                    profession: profession,
-                    qrcode: img
-                }).then(() => {
-                    console.log("Data saved to Firebase");
-                }).catch((error) => {
-                    console.error(error);
-                });
-            } else {
-                console.error("QR code image not found.");
-            }
-        }, 1000); // Augmenter le temps d'attente si nécessaire
+                    // Enregistrer ou mettre à jour le QR code dans Firebase
+                    set(ref(database, `qr-codes/professions/${profession}/${username}`), {
+                        name: name,
+                        phone: phone,
+                        email: email,
+                        profession: profession,
+                        qrcode: img
+                    }).then(() => {
+                        console.log("Data saved to Firebase");
+                    }).catch((error) => {
+                        console.error(error);
+                    });
+                } else {
+                    console.error("QR code image not found.");
+                }
+            }, 1000); // Augmenter le temps d'attente si nécessaire
+        } catch (error) {
+            console.error("Error generating QR code:", error);
+        }
     });
 });
