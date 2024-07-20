@@ -27,6 +27,7 @@
                         <label for="username">Nom d'utilisateur:</label>
                         <input type="text" class="form-control" id="username" name="username" required>
                     </div>
+                    <button type="button" id="load-info" class="btn btn-primary mb-3">Charger les informations</button>
                     <div class="form-group">
                         <label for="name">Nom:</label>
                         <input type="text" class="form-control" id="name" name="name" required>
@@ -43,9 +44,7 @@
                         <label for="profession">Profession:</label>
                         <select class="form-control" id="profession" name="profession" required>
                             <option value="">Sélectionnez une profession</option>
-                            <option value="Developpeur">Developpeur</option>
-                            <option value="Designer">Designer</option>
-                            <!-- Ajoutez d'autres options manuellement pour tester -->
+                            <!-- Les professions seront chargées dynamiquement -->
                         </select>
                     </div>
                     <button type="submit" class="btn btn-success">Générer le QR Code</button>
@@ -58,43 +57,6 @@
 
     <script src="https://cdnjs.cloudflare.com/ajax/libs/jquery/3.6.0/jquery.min.js"></script>
     <script src="https://cdnjs.cloudflare.com/ajax/libs/qrcodejs/1.0.0/qrcode.min.js"></script>
-    <script>
-        $(document).ready(function() {
-            $('#contact-form').submit(function(event) {
-                event.preventDefault();
-                console.log("Form submitted");
-
-                var username = $('#username').val();
-                var name = $('#name').val();
-                var phone = $('#phone').val();
-                var email = $('#email').val();
-                var profession = $('#profession').val();
-
-                var contactInfo = `MECARD:N:${name};TEL:${phone};EMAIL:${email};NOTE:${profession};;`;
-
-                $('#qrcode').empty();
-                var qrcode = new QRCode(document.getElementById("qrcode"), {
-                    text: contactInfo,
-                    width: 256,
-                    height: 256,
-                    colorDark: "#000000",
-                    colorLight: "#ffffff"
-                });
-
-                setTimeout(() => {
-                    var img = $('#qrcode').find('img').attr('src');
-                    if (img) {
-                        $('#download-link').attr('href', img);
-                        $('#download-link').attr('download', 'qrcode.png');
-                        $('#download-link').show();
-
-                        console.log("QR code generated:", img);
-                    } else {
-                        console.error("QR code image not found.");
-                    }
-                }, 500);
-            });
-        });
-    </script>
+    <script type="module" src="app.js"></script>
 </body>
 </html>
