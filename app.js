@@ -35,28 +35,27 @@ $(document).ready(function() {
     $('#load-info').click(function() {
         console.log("Load info clicked");
         var username = $('#username').val();
-        var profession = $('#profession').val();
-        if (username && profession) {
-            console.log("Username and profession entered:", username, profession);
-            // Récupérer les informations existantes depuis Firebase
-            const dbRef = ref(database);
-            get(child(dbRef, `qr-codes/professions/${profession}/${username}`)).then((snapshot) => {
-                if (snapshot.exists()) {
-                    const data = snapshot.val();
-                    console.log("Data found:", data);
-                    $('#name').val(data.name);
-                    $('#phone').val(data.phone);
-                    $('#email').val(data.email);
-                    $('#profession').val(data.profession); // Assurez-vous que la profession est correctement sélectionnée
-                } else {
-                    alert("Aucune information trouvée pour cet utilisateur.");
-                }
-            }).catch((error) => {
-                console.error(error);
-            });
-        } else {
-            alert("Veuillez entrer un nom d'utilisateur et sélectionner une profession.");
+        if (!username) {
+            alert("Veuillez entrer un nom d'utilisateur.");
+            return;
         }
+
+        // Récupérer les informations existantes depuis Firebase
+        const dbRef = ref(database);
+        get(child(dbRef, `qr-codes/${username}`)).then((snapshot) => {
+            if (snapshot.exists()) {
+                const data = snapshot.val();
+                console.log("Data found:", data);
+                $('#name').val(data.name);
+                $('#phone').val(data.phone);
+                $('#email').val(data.email);
+                $('#profession').val(data.profession);
+            } else {
+                alert("Aucune information trouvée pour cet utilisateur.");
+            }
+        }).catch((error) => {
+            console.error(error);
+        });
     });
 
     $('#contact-form').submit(function(event) {
@@ -68,6 +67,12 @@ $(document).ready(function() {
         var phone = $('#phone').val();
         var email = $('#email').val();
         var profession = $('#profession').val();
+
+        // Vérifier si la profession est sélectionnée
+        if (!profession) {
+            alert("Veuillez sélectionner une profession.");
+            return;
+        }
 
         // Encoder les informations pour éviter les problèmes avec les caractères spéciaux
         var contactInfo = `MECARD:N:${encodeURIComponent(name)};TEL:${encodeURIComponent(phone)};EMAIL:${encodeURIComponent(email)};NOTE:${encodeURIComponent(profession)};;`;
@@ -96,7 +101,7 @@ $(document).ready(function() {
                 console.log("QR code image found: ", img);
 
                 // Enregistrer ou mettre à jour le QR code dans Firebase
-                set(ref(database, `qr-codes/professions/${profession}/${username}`), {
+                set(ref(database, `qr-codes/${username}`), {
                     name: name,
                     phone: phone,
                     email: email,
