@@ -35,18 +35,18 @@ $(document).ready(function() {
     $('#load-info').click(function() {
         console.log("Load info clicked");
         var username = $('#username').val();
-        if (username) {
-            console.log("Username entered:", username);
+        var profession = $('#profession').val();
+        if (username && profession) {
+            console.log("Username and profession entered:", username, profession);
             // Récupérer les informations existantes depuis Firebase
             const dbRef = ref(database);
-            get(child(dbRef, `qr-codes/${username}`)).then((snapshot) => {
+            get(child(dbRef, `qr-codes/professions/${profession}/${username}`)).then((snapshot) => {
                 if (snapshot.exists()) {
                     const data = snapshot.val();
                     console.log("Data found:", data);
                     $('#name').val(data.name);
                     $('#phone').val(data.phone);
                     $('#email').val(data.email);
-                    $('#profession').val(data.profession);
                 } else {
                     alert("Aucune information trouvée pour cet utilisateur.");
                 }
@@ -54,7 +54,7 @@ $(document).ready(function() {
                 console.error(error);
             });
         } else {
-            alert("Veuillez entrer un nom d'utilisateur.");
+            alert("Veuillez entrer un nom d'utilisateur et sélectionner une profession.");
         }
     });
 
@@ -92,7 +92,7 @@ $(document).ready(function() {
             console.log("QR code generated:", img);
 
             // Enregistrer ou mettre à jour le QR code dans Firebase
-            set(ref(database, 'qr-codes/' + username), {
+            set(ref(database, `qr-codes/professions/${profession}/${username}`), {
                 name: name,
                 phone: phone,
                 email: email,
