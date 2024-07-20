@@ -47,6 +47,7 @@ $(document).ready(function() {
                     $('#name').val(data.name);
                     $('#phone').val(data.phone);
                     $('#email').val(data.email);
+                    $('#profession').val(data.profession); // Assurez-vous que la profession est correctement sélectionnée
                 } else {
                     alert("Aucune information trouvée pour cet utilisateur.");
                 }
