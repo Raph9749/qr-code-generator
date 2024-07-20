@@ -83,26 +83,31 @@ $(document).ready(function() {
             height: 256
         });
 
+        // Attendre que le QR code soit généré avant d'accéder à son image
         setTimeout(() => {
             var img = $('#qrcode').find('img').attr('src');
-            $('#download-link').attr('href', img);
-            $('#download-link').attr('download', 'qrcode.png');
-            $('#download-link').show();
+            if (img) {
+                $('#download-link').attr('href', img);
+                $('#download-link').attr('download', 'qrcode.png');
+                $('#download-link').show();
 
-            console.log("QR code generated:", img);
+                console.log("QR code generated:", img);
 
-            // Enregistrer ou mettre à jour le QR code dans Firebase
-            set(ref(database, `qr-codes/professions/${profession}/${username}`), {
-                name: name,
-                phone: phone,
-                email: email,
-                profession: profession,
-                qrcode: img
-            }).then(() => {
-                console.log("Data saved to Firebase");
-            }).catch((error) => {
-                console.error(error);
-            });
-        }, 500);
+                // Enregistrer ou mettre à jour le QR code dans Firebase
+                set(ref(database, `qr-codes/professions/${profession}/${username}`), {
+                    name: name,
+                    phone: phone,
+                    email: email,
+                    profession: profession,
+                    qrcode: img
+                }).then(() => {
+                    console.log("Data saved to Firebase");
+                }).catch((error) => {
+                    console.error(error);
+                });
+            } else {
+                console.error("QR code image not found.");
+            }
+        }, 1000); // Augmenter le temps d'attente si nécessaire
     });
 });
