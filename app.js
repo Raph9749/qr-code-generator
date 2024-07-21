@@ -74,7 +74,14 @@ $(document).ready(function() {
         }
 
         // Encoder les informations pour éviter les problèmes avec les caractères spéciaux
-        var contactInfo = `MECARD:N:${encodeURIComponent(name)};TEL:${encodeURIComponent(phone)};EMAIL:${encodeURIComponent(email)};NOTE:${encodeURIComponent(profession)};;`;
+        var encodedName = encodeURIComponent(name);
+        var encodedPhone = encodeURIComponent(phone);
+        var encodedEmail = encodeURIComponent(email);
+        var encodedProfession = encodeURIComponent(profession);
+
+        // Formatter les informations de contact pour les utilisateurs d'Apple et d'Android
+        var contactInfo = `MECARD:N:${encodedName};TEL:${encodedPhone};EMAIL:${encodedEmail};ORG:${encodedProfession};;`;
+
         console.log("Encoded Contact Info: ", contactInfo);
 
         $('#qrcode').empty();
