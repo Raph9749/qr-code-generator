@@ -73,21 +73,14 @@ $(document).ready(function() {
             return;
         }
 
-        // Encoder les informations pour éviter les problèmes avec les caractères spéciaux
-        var encodedName = encodeURIComponent(name);
-        var encodedPhone = encodeURIComponent(phone);
-        var encodedEmail = encodeURIComponent(email);
-        var encodedProfession = encodeURIComponent(profession);
-
-        // Formatter les informations de contact pour les utilisateurs d'Apple et d'Android
-        var contactInfo = `MECARD:N:${encodedName};TEL:${encodedPhone};EMAIL:${encodedEmail};ORG:${encodedProfession};;`;
-
-        console.log("Encoded Contact Info: ", contactInfo);
+        // Format vCard pour une meilleure compatibilité
+        var vCard = `BEGIN:VCARD\nVERSION:3.0\nN:${name}\nTEL:${phone}\nEMAIL:${email}\nORG:${profession}\nEND:VCARD`;
+        console.log("vCard: ", vCard);
 
         $('#qrcode').empty();
         try {
             var qrcode = new QRCode(document.getElementById("qrcode"), {
-                text: contactInfo,
+                text: vCard,
                 width: 256,
                 height: 256,
                 colorDark: "#000000",
